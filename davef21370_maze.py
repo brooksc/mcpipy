@@ -1,6 +1,9 @@
 # Quick rough & ready maze generator for Minecraft Pi edition.
 # Dave Finch 2013
 
+# mcpipy.com retrieved from URL below, written by davef21370
+# https://github.com/brooksc/mcpipy/blob/master/davef21370_maze.py
+
 import mcpi.minecraft as minecraft
 import mcpi.block as block
 import sys, random
