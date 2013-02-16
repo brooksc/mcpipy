@@ -1,3 +1,4 @@
+#!/usr/bin/env
 
 # mcpipy.com retrieved from URL below, written by snowbound
 # http://www.minecraftforum.net/topic/1680160-simple-flatmap-script/
