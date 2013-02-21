@@ -1,11 +1,11 @@
 from connection import Connection
-#from vec3 import Vec3
-from vec3 import *
+from vec3 import Vec3
 from event import BlockEvent
-import time
+from block import Block
+import math
+from util import flatten
 
-
-""" Minecraft PI low level api v0.1_0
+""" Minecraft PI low level api v0.1_1
 
     Note: many methods have the parameter *arg. This solution makes it
     simple to allow different types, and variable number of arguments.
@@ -17,6 +17,9 @@ import time
 
     @author: Aron Nieminen, Mojang AB"""
 
+
+def intFloor(*args):
+    return [int(math.floor(x)) for x in flatten(args)]
 
 class CmdPositioner:
     """Methods for setting and getting positions"""
@@ -40,7 +43,7 @@ class CmdPositioner:
 
     def setTilePos(self, id, *args):
         """Set entity tile position (entityId:int) => Vec3"""
-        self.conn.send(self.pkg + ".setTile", id, args)
+        self.conn.send(self.pkg + ".setTile", id, intFloor(*args))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
@@ -117,19 +120,30 @@ class Minecraft:
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
-        return int(self.conn.sendReceive("world.getBlock", args))
+        return int(self.conn.sendReceive("world.getBlock", intFloor(args)))
+
+    def getBlockWithData(self, *args):
+        """Get block with data (x,y,z) => Block"""
+        ans = self.conn.sendReceive("world.getBlockWithData", intFloor(args))
+        return Block(*map(int, ans.split(",")))
+    """
+        @TODO
+    """
+    def getBlocks(self, *args):
+        """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
+        return int(self.conn.sendReceive("world.getBlocks", intFloor(args)))
 
     def setBlock(self, *args):
         """Set block (x,y,z,id,[data])"""
-        self.conn.send("world.setBlock", args)
+        self.conn.send("world.setBlock", intFloor(args))
 
     def setBlocks(self, *args):
         """Set a cuboid of blocks (x0,y0,z0,x1,y1,z1,id,[data])"""
-        self.conn.send("world.setBlocks", args)
+        self.conn.send("world.setBlocks", intFloor(args))
 
     def getHeight(self, *args):
         """Get the height of the world (x,z) => int"""
-        return int(self.conn.sendReceive("world.getHeight", args))
+        return int(self.conn.sendReceive("world.getHeight", intFloor(args)))
 
     def getPlayerEntityIds(self):
         """Get the entity ids of the connected players => [id:int]"""
@@ -157,10 +171,6 @@ class Minecraft:
         return Minecraft(Connection(address, port))
 
 
-
-
-
 if __name__ == "__main__":
-    mc = Minecraft.create("192.168.1.198")
-#    mc.postToChat("Hello, Minecraft!")
-    mc.postToChat("Hello, Phillip!")
+    mc = Minecraft.create()
+    mc.postToChat("Hello, Minecraft!")
