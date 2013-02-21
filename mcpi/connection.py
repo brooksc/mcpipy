@@ -1,7 +1,7 @@
 import socket
 import select
 import sys
-from util import flatten_parameters
+from util import flatten_parameters_to_string
 
 """ @author: Aron Nieminen, Mojang AB"""
 
@@ -30,9 +30,9 @@ class Connection:
 
     def send(self, f, *data):
         """Sends data. Note that a trailing newline '\n' is added here"""
-        s = "%s(%s)\n"%(f, flatten_parameters(data))
-        print "f,data:",f,data
-        print "s",s
+        s = "%s(%s)\n"%(f, flatten_parameters_to_string(data))
+        #print "f,data:",f,data
+        #print "s",s
         self.drain()
         self.lastSent = s
         self.socket.sendall(s)
