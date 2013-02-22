@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
 import mcpi.minecraft as minecraft
 import mcpi.block as block
 import time
+import server
+
 
 #Author:		Obsidz
 #
@@ -74,7 +78,7 @@ def TPChar(): #sends the character to the next pad
    
 if __name__ == "__main__": # The script
    
-	mc = minecraft.Minecraft.create()
+	mc = minecraft.Minecraft.create(server.address)
 	while True:
 		if isLaunchPad():
 			TPChar()

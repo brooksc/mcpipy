@@ -6,8 +6,10 @@
 
 import mcpi.minecraft as minecraft
 import mcpi.block as block
+import server
 
-mc = minecraft.Minecraft.create()
+
+mc = minecraft.Minecraft.create(server.address)
 
 mc.postToChat("Hallo, here's your sphere")
 

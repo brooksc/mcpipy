@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Quick rough & ready maze generator for Minecraft Pi edition.
 # Dave Finch 2013
 
@@ -8,10 +10,12 @@ import mcpi.minecraft as minecraft
 import mcpi.block as block
 import sys, random
 from random import randint as rand
+import server
+
 
 # Connect to Minecraft.
 try:
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create(server.address)
 except:
     print "Cannot connect to Minecraft."
     sys.exit(0)

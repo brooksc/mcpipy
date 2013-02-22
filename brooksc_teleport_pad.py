@@ -1,8 +1,11 @@
+#!/usr/bin/env python
+
 # as shared on mcpipy.com
 
 import mcpi.minecraft as minecraft
 import mcpi.block as block
 import time
+import server
 
 
 # If you are running this script with the bukkit mod, then use a diamond block as the magic center block for teleporting
@@ -11,7 +14,7 @@ magic_block = block.DIAMOND_BLOCK # for bukkit server
 #magic_block = block.NETHER_REACTOR_CORE # for raspberry pi
 
 if __name__ == "__main__": # The script
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create(server.address)
     loc = mc.player.getPos()
     x = loc.x
     y = loc.y - 1

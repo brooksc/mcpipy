@@ -1,4 +1,5 @@
-#! /usr/bin/python
+#!/usr/bin/env python
+
 
 # mcpipy.com retrieved from URL below, written by SleepyOz
 # http://www.raspberrypi.org/phpBB3/viewtopic.php?f=32&t=33427
@@ -6,6 +7,8 @@
 import mcpi.block as block
 import mcpi.minecraft as minecraft
 import time
+import server
+
 
 """
 Dot matrix digits 5x8 matrix.
@@ -149,7 +152,7 @@ def output_digit(client, position, offset, dots):
             client.setBlock(position.x+blank+x_offset, position.y-line_offset, position.z, block.AIR)
         line_offset += 1 # Next line.
 
-client=minecraft.Minecraft.create() # Connect to Minecraft.
+client=minecraft.Minecraft.create(server.address) # Connect to Minecraft.
 place=client.player.getPos() # Start near the player.
 place.y += 9 # Above the player's ground level.
 
