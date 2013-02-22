@@ -1,4 +1,5 @@
-#! /usr/bin/python
+#!/usr/bin/env python
+
 """
 Draw an analogue clock into Minecraft.
 Use PIL to prepare the bitmaps, then update Minecraft.
@@ -16,6 +17,8 @@ import mcpi.minecraft as minecraft
 from PIL import Image # Remember to "sudo apt-get install python-imaging" to make PIL available.
 from PIL import ImageDraw
 import time
+import server
+
 
 # Not very good colour names, because they are inverting when displayed.
 colour_black = 1
@@ -114,7 +117,7 @@ class buffer:
 
                         client.setBlock(self.anchor_position.x + x, self.anchor_position.y, self.anchor_position.z + z, display)
 
-client=minecraft.Minecraft.create() # Connect to Minecraft.
+client=minecraft.Minecraft.create(server.address) # Connect to Minecraft.
 place=client.player.getPos() # Start near the player.
 place.y += 0 # At the level of the player's feet.
 bitmapper = buffer(place)

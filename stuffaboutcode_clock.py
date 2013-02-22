@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #www.stuffaboutcode.com
 #Raspberry Pi, Minecraft Analogue Clock
 
@@ -14,6 +16,8 @@ import time
 import datetime
 #import math so we can use cos and sin
 import math
+import server
+
 
 #mid point circle algorithm
 def drawCircle(mc, x0, y0, z, radius, blockType):
@@ -140,7 +144,7 @@ if __name__ == "__main__":
     time.sleep(5)
     #Connect to minecraft by creating the minecraft object
     # - minecraft needs to be running and in a game
-    mc = minecraft.Minecraft.create("192.168.1.100")
+    mc = minecraft.Minecraft.create(server.address)
 
     #Post a message to the minecraft chat window 
     mc.postToChat("Hi, Minecraft Analogue Clock, www.stuffaboutcode.com")

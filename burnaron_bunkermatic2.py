@@ -1,10 +1,14 @@
+#!/usr/bin/env python
+
 # mcpipy.com retrieved from URL below, written by burnaron
 # http://www.minecraftforum.net/topic/1689199-my-first-script-bunkermaticpy/
 
 import mcpi.minecraft as minecraft
 import mcpi.block as block
 from math import *
-mc = minecraft.Minecraft.create()
+import server
+
+mc = minecraft.Minecraft.create(server.address)
 x1 = -4
 y1 = 3
 z1 = 9

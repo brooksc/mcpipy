@@ -5,8 +5,10 @@
 # or from another computer on the network
 #
 
-# if you are running the scripts on the raspberry pi, then set server to localhost
-server = "localhost"
+# if you are running the scripts on the raspberry pi, then set address to 127.0.0.1
+# 127.0.0.1 is a special address that means connect to the same machine I'm running this on
+# so this is useful when you are runnning the script and minecraft on the same machine
+address = "127.0.0.1"
 # If you are running the scripts on a machine other than the raspberry pi, then put the rasberry pi's
 # ip address here
-#server = "192.168.1.100"
+#address = "192.168.1.100"

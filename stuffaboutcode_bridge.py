@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #www.stuffaboutcode.com
 #Raspberry Pi, Minecraft - auto bridge
 
@@ -10,6 +12,8 @@ import mcpi.minecraft as minecraft
 import mcpi.block as block
 #import time, so delays can be used
 import time
+import server
+
 
 #function to round players float position to integer position
 def roundVec3(vec3):
@@ -21,7 +25,7 @@ if __name__ == "__main__":
 
     #Connect to minecraft by creating the minecraft object
     # - minecraft needs to be running and in a game
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create(server.address)
 
     #Post a message to the minecraft chat window
     mc.postToChat("Hi, Minecraft - Auto Bridge Active")

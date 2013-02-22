@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #www.stuffaboutcode.com
 #Raspberry Pi, Minecraft - hide and seek
 
@@ -14,6 +16,8 @@ import time
 import random
 #import math module to use square root function
 import math
+import server
+
 
 #function to round players float position to integer position
 def roundVec3(vec3):
@@ -29,7 +33,7 @@ if __name__ == "__main__":
 
     #Connect to minecraft by creating the minecraft object
     # - minecraft needs to be running and in a game
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create(server.address)
 
     #Post a message to the minecraft chat window
     mc.postToChat("Hi, Minecraft Hide & Seek")

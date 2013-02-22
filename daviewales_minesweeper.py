@@ -8,6 +8,8 @@ import sys
 import random
 import threading
 import mcpi.minecraft as minecraft
+import server
+
 
 defaultDifficulty = 0.1
 setDifficulty = defaultDifficulty
@@ -233,7 +235,7 @@ class BlockCheckThread(threading.Thread):
 #def main():
 global running
 running = True
-mc = minecraft.Minecraft.create()
+mc = minecraft.Minecraft.create(server.address)
 board = board()
 newBoard = board.create()
 visibleScreen = board.visibleScreen()
