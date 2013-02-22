@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     #Connect to minecraft by creating the minecraft object
     # - minecraft needs to be running and in a game
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create("192.168.1.100")
     mc.setBlocks(-10,-10,-10,10,100,10,block.AIR)
 
     x = 0.0

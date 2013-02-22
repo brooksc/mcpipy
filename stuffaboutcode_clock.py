@@ -140,7 +140,7 @@ if __name__ == "__main__":
     time.sleep(5)
     #Connect to minecraft by creating the minecraft object
     # - minecraft needs to be running and in a game
-    mc = minecraft.Minecraft.create()
+    mc = minecraft.Minecraft.create("192.168.1.100")
 
     #Post a message to the minecraft chat window 
     mc.postToChat("Hi, Minecraft Analogue Clock, www.stuffaboutcode.com")
