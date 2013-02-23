@@ -15,8 +15,10 @@ if __name__ == "__main__":
     mc.setBlocks(-128,0,-128,128,-64,128,block.SANDSTONE.id)
     mc.postToChat("Putting a diamong block at 0,0,0")
     mc.setBlock(0,0,0,block.DIAMOND_BLOCK.id)
+
     while True:
         #Find out your players position
         playerPos = mc.player.getPos()
-        mc.postToChat("Find your position - its x=%s z=%s y=%s" % (int(playerPos.x), int(playerPos.z), int(playerPos.y)))
+        mc.postToChat("Find your position - its x=%s y=%s z=%s" % (int(playerPos.x), int(playerPos.y), int(playerPos.z)))
+#        mc.postToChat("Find your position - its x=%.2f y=%.2f z=%.2f" % (playerPos.x, playerPos.y, playerPos.z))
         time.sleep(1)
