@@ -92,7 +92,7 @@ block_id_to_name = {
 
 def usage(exit_val, output_file):
     print """
-usage: minescan [-hcev] [-x num] [-y num] [-z num]
+usage: minescan [-hcevj] [-x num] [-y num] [-z num]
 [-X num] [-Y num] [-Z num] [-o outputfile]
 
 MineScan will connect to Minecraft PI Edition server or Bukkit Server using the
@@ -114,6 +114,9 @@ what's inside the container.
 glass container.
 
 -v: Verbose output on the console, prints information on what's found...
+
+-j: If specified, scripts assumes it's running on RaspberryJuice which doesn't
+support the getBlockWithData command.  As a result, some detail won't be scanned.
 
 MineScan needs to be told the xyz coordinates of where to scan and/or create
 the container and the how far to scan.  This is done by specifying:
@@ -152,7 +155,7 @@ Default is 127.0.0.1 (local machine)
 # I've considered writing this as a class and sharing data via member variables, however I want this
 # script to be easy to understand for anyone that is starting to learn python
 # as a result I'm passing all arguments to the function.  It's ugly but easier for someone starting to learn.
-def generate_container(mc, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, opt_container, opt_container_empty):
+def generate_container(mc, opt_ispy, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, opt_container, opt_container_empty):
     if verbose:
         print "Creating Container(%s, %s, %s, %s, %s, %s)" % (opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2)
     if not opt_container_empty:
@@ -172,7 +175,7 @@ def generate_container(mc, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbo
         mc.setBlocks(opt_x2+1,opt_y1-1,opt_z2+1,opt_x1-1,opt_y2+1,opt_z2+1, block.GLASS.id)
     return
 
-def minescan(mc, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, output_file):
+def minescan(mc, opt_ispy, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, output_file):
     try:
         py_out = open(output_file, "w")
     except:
@@ -200,37 +203,47 @@ mc.postToChat("Re-creating world")
     if verbose:
         print "Scanning %d blocks" % total_cycles
     cycle = 0
-#    for y in range(0, (opt_y2 - opt_y1)+1):
-#        for x in range(0, (opt_x2 - opt_x1)+1):
-#            for z in range(0, (opt_z2 - opt_z1)+1):
 
+    block_data = 0
     for y in range(0, (opt_y2 - opt_y1)):
         for x in range(0, (opt_x2 - opt_x1)):
             for z in range(0, (opt_z2 - opt_z1)):
 
-                block_id = mc.getBlock(opt_x1 + x,opt_y1 + y,opt_z1 + z)
+                if opt_ispy:
+                    (block_id, block_data) = mc.getBlockWithData(opt_x1 + x,opt_y1 + y,opt_z1 + z)
+                else:
+                    block_id = mc.getBlock(opt_x1 + x,opt_y1 + y,opt_z1 + z)
 #                block_id = 0
                 if block_id:
                     if str(block_id) in block_id_to_name:
-                        if verbose:
-                            print "mc.getblock(%s,%s,%s) = %s" % (x,y,z,block_id_to_name[str(block_id)])
-                        py_out.write("mc.setBlock(%s,%s,%s,block.%s.id)\n" % (x,y,z,block_id_to_name[str(block_id)]))
-                    else:
-                        if verbose:
-                            print "mc.getblock(%s,%s,%s) = %s" % (x,y,z,block_id)
-                        py_out.write("# Note this block is not supported in Minecraft Pi Edition v0.1.1\n")
-                        py_out.write("mc.setBlock(%s,%s,%s,%s)\n" % (x,y,z,block_id))
-                else:
+                        if block_data:
+                            if verbose:
+                                print "mc.getBlockWithData(%s,%s,%s) = %s, %s" % (x,y,z,block_id_to_name[str(block_id)],block_data)
+                            py_out.write("mc.setBlock(%s,%s,%s,block.%s.id,%s)\n" % (x,y,z,block_id_to_name[str(block_id)],block_data))
+                        else:
+                            if verbose:
+                                print "mc.getBlock(%s,%s,%s) = %s" % (x,y,z,block_id_to_name[str(block_id)])
+                            py_out.write("mc.setBlock(%s,%s,%s,block.%s.id)\n" % (x,y,z,block_id_to_name[str(block_id)]))
+                    else: # Block ID not defined in MCPI v0.1.1
+                        if block_data:
+                            if verbose:
+                                print "mc.getBlockWithData(%s,%s,%s) = %s, %s" % (x,y,z,block_id, block_data)
+                            py_out.write("# Note this block is not supported in Minecraft Pi Edition v0.1.1\n")
+                            py_out.write("mc.setBlock(%s,%s,%s,%s,%s)\n" % (x,y,z,block_id, block_data))
+                        else:
+                            if verbose:
+                                print "mc.getBlock(%s,%s,%s) = %s" % (x,y,z,block_id)
+                            py_out.write("# Note this block is not supported in Minecraft Pi Edition v0.1.1\n")
+                            py_out.write("mc.setBlock(%s,%s,%s,%s)\n" % (x,y,z,block_id))
+                else: # No block id returned
                     if verbose:
-                        print "mc.getblock(%s,%s,%s) = %s" % (x,y,z,block_id_to_name[str(block_id)])
+                        print "mc.getBlock(%s,%s,%s) = %s" % (x,y,z,block_id_to_name[str(block_id)])
                 cycle += 1
 
                 # Print this once every 10 cycles
                 if not cycle % 10:
                     percent_complete = (float(cycle) / float(total_cycles)) * 100
                     print "[%d/%d] %.f%s complete" % (cycle, total_cycles, percent_complete, "%")
-#                if cycle > total_cycles:
-#                    pass
 
     py_out.write("mc.postToChat('World Re-created!')\n")
 
@@ -252,6 +265,7 @@ def main(argv):
     opt_x2 = 10
     opt_y2 = 10
     opt_z2 = 10
+    opt_ispy = True
 
 #    verbose = True
     verbose = False
@@ -271,7 +285,7 @@ def main(argv):
         # e = create empty container, don't scan
         # v = verbose mode
         # s: = server ip
-        opts, args = getopt.getopt(argv,"ho:x:y:z:X:Y:Z:b:u:cevs:",["ofile="])
+        opts, args = getopt.getopt(argv,"ho:x:y:z:X:Y:Z:b:u:cevs:j",["ofile="])
     except getopt.GetoptError:
         usage(2, output_file)
     for opt, arg in opts:
@@ -289,6 +303,8 @@ def main(argv):
             opt_y2 = int(arg)
         elif opt == '-Z':
             opt_z2 = int(arg)
+        elif opt == '-j':
+            opt_ispy = False
         elif opt == '-v':
             verbose = True
         elif opt == '-e':
@@ -326,17 +342,19 @@ z2 = "%s"
 Create Container: %s
 Create Empty Container: %s
 Server: %s
+Is Raspberry Pi: %s
 
-""" % (output_file, opt_x1, opt_x2, opt_y1, opt_y2, opt_z1, opt_z2, opt_container, opt_container_empty, server_address)
+""" % (output_file, opt_x1, opt_x2, opt_y1, opt_y2, opt_z1, opt_z2,
+       opt_container, opt_container_empty, server_address, opt_ispy)
     elif not opt_container and not opt_container_empty:
         print 'Output file is "%s"' % (output_file)
 
     mc = minecraft.Minecraft.create(server_address)
 
     if opt_container or opt_container_empty:
-        generate_container(mc, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, opt_container, opt_container_empty)
+        generate_container(mc, opt_ispy, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, opt_container, opt_container_empty)
     else:
-        minescan(mc, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, output_file)
+        minescan(mc, opt_ispy, opt_x1, opt_y1, opt_z1, opt_x2, opt_y2, opt_z2, verbose, output_file)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
