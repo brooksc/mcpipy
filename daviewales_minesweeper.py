@@ -209,6 +209,7 @@ class BlockCheckThread(threading.Thread):
             event = mc.events.pollBlockHits()
 
             if event:
+#                mc.postToChat("Hit detected")
                 eventSplit = str(event[0]).split()
                 eventSplit = [eventSplit[1][0], eventSplit[2][0], eventSplit[3][0]]
                 cursorX, cursorY, cursorZ = eventSplit
