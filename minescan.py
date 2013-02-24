@@ -199,7 +199,7 @@ mc.postToChat("Re-creating world")
 
     # write the rest of your code here...
     #    mc.postToChat("Hello MCPIPY World!")
-    total_cycles = (opt_x2 - opt_x1) * (opt_y2 - opt_y1) * (opt_z2 - opt_z1)
+    total_cycles = ((opt_x2 - opt_x1)+1) * ((opt_y2 - opt_y1)+1) * ((opt_z2 - opt_z1)+1)
     if verbose:
         print "Scanning %d blocks" % total_cycles
     cycle = 0
