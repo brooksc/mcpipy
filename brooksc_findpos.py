@@ -10,11 +10,11 @@ import server
 
 if __name__ == "__main__":
     mc = minecraft.Minecraft.create(server.address)
-    mc.postToChat("Flattening surface")
-    mc.setBlocks(-128,0,-128,128,64,128,0)
-    mc.setBlocks(-128,0,-128,128,-64,128,block.SANDSTONE.id)
-    mc.postToChat("Putting a diamong block at 0,0,0")
-    mc.setBlock(0,0,0,block.DIAMOND_BLOCK.id)
+#    mc.postToChat("Flattening surface")
+#    mc.setBlocks(-128,0,-128,128,64,128,0)
+#    mc.setBlocks(-128,0,-128,128,-64,128,block.SANDSTONE.id)
+#    mc.postToChat("Putting a diamong block at 0,0,0")
+#    mc.setBlock(0,0,0,block.DIAMOND_BLOCK.id)
 
     while True:
         #Find out your players position
