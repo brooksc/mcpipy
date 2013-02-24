@@ -205,9 +205,9 @@ mc.postToChat("Re-creating world")
     cycle = 0
 
     block_data = 0
-    for y in range(0, (opt_y2 - opt_y1)):
-        for x in range(0, (opt_x2 - opt_x1)):
-            for z in range(0, (opt_z2 - opt_z1)):
+    for y in range(0, (opt_y2 - opt_y1)+1):
+        for x in range(0, (opt_x2 - opt_x1)+1):
+            for z in range(0, (opt_z2 - opt_z1)+1):
 
                 if opt_ispy:
                     (block_id, block_data) = mc.getBlockWithData(opt_x1 + x,opt_y1 + y,opt_z1 + z)
