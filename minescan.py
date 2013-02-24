@@ -152,6 +152,7 @@ Default is 127.0.0.1 (local machine)
 """ % (output_file)
     sys.exit(exit_val)
 
+
 # I've considered writing this as a class and sharing data via member variables, however I want this
 # script to be easy to understand for anyone that is starting to learn python
 # as a result I'm passing all arguments to the function.  It's ugly but easier for someone starting to learn.
