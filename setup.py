@@ -11,6 +11,6 @@ setup(
     description = ("Refer to mcpipy.com"),
     keywords = "raspberry pi minecraft python tutorial",
     url = "https://github.com/brooksc/mcpipy",
-    packages=['mcpi'],
+    packages=['mcpi', 'mcpi.examples'],
     long_description=read('README.md'),
 )
