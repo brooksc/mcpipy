@@ -9,10 +9,9 @@ See: http://jjinux.blogspot.com/2013/05/drawing-sierpinskis-triangle-in.html
 
 """
 
+from .. import minecraft
+from .. import block
 import random
-
-import mcpi.minecraft
-import mcpi.block as block
 import server
 
 # It goes from -MAX_XZ to MAX_XZ.
@@ -61,7 +60,7 @@ def draw_sierpinski_triangle(minecraft):
                TRIANGLE_HEIGHT,
                random_in_range())
 
-    for i in xrange(MAX_ITERATIONS):
+    for i in range(MAX_ITERATIONS):
 
         if i % PRINT_FREQ == 0:
             print("Drew %s blocks" % i)
@@ -85,7 +84,7 @@ def draw_sierpinski_triangle(minecraft):
 
 
 if __name__ == "__main__":
-    minecraft = mcpi.minecraft.Minecraft.create(server.address)
+    minecraft = minecraft.Minecraft.create(server.address)
 
     # Uncomment this if you need it.
     # clear_board(minecraft)

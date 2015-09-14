@@ -12,8 +12,8 @@ SleepyOz: tfptfp(at)gmail.com
 # http://www.raspberrypi.org/phpBB3/viewtopic.php?f=32&t=33427
 
 import math
-import mcpi.block as block
-import mcpi.minecraft as minecraft
+from .. import minecraft
+from .. import block
 from PIL import Image # Remember to "sudo apt-get install python-imaging" to make PIL available.
 from PIL import ImageDraw
 import time

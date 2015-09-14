@@ -4,8 +4,8 @@
 # http://www.nt7s.com/blog/2013/02/exploring-minecraft-pi-edition/
 
 
-import mcpi.minecraft as minecraft
-import mcpi.block as block
+from .. import minecraft
+from .. import block
 import server
 
 

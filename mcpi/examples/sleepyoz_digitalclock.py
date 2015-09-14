@@ -4,8 +4,8 @@
 # mcpipy.com retrieved from URL below, written by SleepyOz
 # http://www.raspberrypi.org/phpBB3/viewtopic.php?f=32&t=33427
 
-import mcpi.block as block
-import mcpi.minecraft as minecraft
+from .. import minecraft
+from .. import block
 import time
 import server
 

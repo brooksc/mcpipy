@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 from math import sin, cos, radians
-import danielbates_minecraft_basic as mc
+from . import danielbates_minecraft_basic as mc
 #import pygame.image # comment this out if not using images - it's slow to import.  If you uncomment, uncomment the image reference below.
 import random
 import server
@@ -30,7 +30,7 @@ Transformations can be combined by multiplying them together."""
     elif isinstance(other, coordinate3d):
       return self.apply(other)
     else:
-      print "Can't multiply transformation by {0}".format(type(other))
+      print("Can't multiply transformation by {0}".format(type(other)))
 
   def compose(self, other):
     """Compose this transformation with another, returning a new transformation."""

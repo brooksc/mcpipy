@@ -16,9 +16,8 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import the minecraft.py module from the minecraft directory
-import minecraft.minecraft as minecraft
-#import minecraft block module
-import minecraft.block as block
+from .. import minecraft
+from .. import block
 #import time, so delays can be used
 import time
 #import random module to create random number
@@ -220,5 +219,5 @@ if __name__ == "__main__":
             #move the snake
             playing = snake.move()
     except KeyboardInterrupt:
-        print "stopped"
+        print("stopped")
     

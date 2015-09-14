@@ -7,9 +7,8 @@
 # http://www.stuffaboutcode.com/2013/01/raspberry-pi-minecraft-hide-and-seek.html
 
 #import the minecraft.py module from the minecraft directory
-import mcpi.minecraft as minecraft
-#import minecraft block module
-import mcpi.block as block
+from .. import minecraft
+from .. import block
 #import time, so delays can be used
 import time
 #import random module to create random number
@@ -48,7 +47,7 @@ if __name__ == "__main__":
     randomBlockPos.x = random.randrange(randomBlockPos.x - 50, randomBlockPos.x + 50)
     randomBlockPos.y = random.randrange(randomBlockPos.y - 5, randomBlockPos.y + 5)
     randomBlockPos.z = random.randrange(randomBlockPos.z - 50, randomBlockPos.z + 50)
-    print randomBlockPos
+    print(randomBlockPos)
   
     #Create hidden diamond block
     mc.setBlock(randomBlockPos.x, randomBlockPos.y, randomBlockPos.z, block.DIAMOND_BLOCK)

@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
 #import the minecraft.py module from the minecraft directory
-import mcpi.minecraft as minecraft
-#import minecraft block module
-import mcpi.block as block
-#import time, so delays can be used
+from .. import minecraft
 import server
 
 def main():

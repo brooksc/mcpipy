@@ -4,12 +4,10 @@
 # https://bitbucket.org/dwales/minesweeper-for-minecraft-pi-edition/src
 
 
-import sys
+from .. import minecraft
+import server
 import random
 import threading
-import mcpi.minecraft as minecraft
-import server
-
 
 defaultDifficulty = 0.1
 setDifficulty = defaultDifficulty
@@ -69,12 +67,12 @@ class board:
     # add together the number of mines touching the original square and replace
     # the original square with the final count.
     def numberise(self, board):
-        for x in xrange(width):
-            for y in xrange(height):
+        for x in range(width):
+            for y in range(height):
                 count = 0
                 if board[x][y] != "*":
-                        for i in xrange(-1, 2):
-                            for n in xrange(-1, 2):
+                        for i in range(-1, 2):
+                            for n in range(-1, 2):
                                 try:
                                     if board[x+i][y+n] == "*":
                                         count += 1
@@ -87,25 +85,25 @@ class board:
         self.mineCoords = []
         choices = self.options()
         board = {}
-        for i in xrange(0, width):
+        for i in range(0, width):
             board[i] = {}
-            for n in xrange(0, height):
+            for n in range(0, height):
                 board[i][n] = choices.pop(choices.index(random.choice(choices)))
                 if board[i][n] == "*":
                     self.mineCoords.append([i,n])
 
         self.numberise(board)
-        for i in xrange(width):
-            for n in xrange(height):
+        for i in range(width):
+            for n in range(height):
                 minecraftAddBlock(i, n, 1, board[i][n])
 
         return board
 
     def visibleScreen(self):
         board = {}
-        for i in xrange(0, width):
+        for i in range(0, width):
             board[i] = {}
-            for n in xrange(0, height):
+            for n in range(0, height):
                 board[i][n] = " "
         return board
 
@@ -142,8 +140,8 @@ def explore(x, y, Z): # Z is capitalised because it doesn't
         minecraftAddBlock(X, Y, Z, 0)
         if [X,Y] not in cleared:
             cleared.append([X,Y])
-        for i in xrange(-1, 2):
-            for n in xrange(-1, 2):
+        for i in range(-1, 2):
+            for n in range(-1, 2):
 
         # When I was writing this section, it wouldn't work, and wouldn't work
         # and then after changing it around a million times, suddenly it started working...
@@ -162,6 +160,8 @@ def explore(x, y, Z): # Z is capitalised because it doesn't
                 except KeyError:
                     pass
 
+import sys
+
 class WinningCheckThread (threading.Thread):
 
     def __init__(self,  mineCoords, mineNumber, z):
@@ -179,16 +179,16 @@ class WinningCheckThread (threading.Thread):
             flagCount = 0
             correctFlagCount = 0
 
-            for x in xrange(width):
-                for y in xrange(height):
+            for x in range(width):
+                for y in range(height):
                     if mc.getBlock(x, y, 0-1) == 50:
                         flagCount += 1
                         if [x,y] in self.mineCoords:
                             correctFlagCount += 1
 
             if  (self.mineNumber == correctFlagCount) and (self.mineNumber == flagCount):
-                for x in xrange(width):
-                     for y in xrange(height):
+                for x in range(width):
+                     for y in range(height):
                          mc.setBlock(x, y, self.z, 20)
 
                 mc.postToChat("You Win!!!")
@@ -217,8 +217,8 @@ class BlockCheckThread(threading.Thread):
                 cursorY = int(cursorY)
                 cursorZ = int(cursorZ)
                 if newBoard[cursorX][cursorY] == "*":
-                    for y in xrange(height):
-                        for x in xrange(width):
+                    for y in range(height):
+                        for x in range(width):
                             # This bit of code's dodgy, because it relies on the 
                             # creation of "newBoard" external to the function...
                             mc.setBlock(x, y, z, 0) # (If you hit a mine it clears the board.)
@@ -241,13 +241,13 @@ board = board()
 newBoard = board.create()
 visibleScreen = board.visibleScreen()
 
-for x in xrange(width):
-    for y in xrange(height):
+for x in range(width):
+    for y in range(height):
         mc.setBlock(x,y,-1,0)
 
 z = 0 # For now... We can make this dynamic later.
-for y in xrange(height):
-   for x in xrange(width):
+for y in range(height):
+   for x in range(width):
        # This bit of code's dodgy, because it relies on the 
        # creation of "visibleScreen" external to the function...
        minecraftAddBlock(x, y, z, "dirt")

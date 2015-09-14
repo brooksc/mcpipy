@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import mcpi.minecraft as minecraft
+from .. import minecraft
 import server
 
 """ hello world test app

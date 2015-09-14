@@ -4,8 +4,8 @@
 # mcpipy.com retrieved from URL below, written by zhuowei
 # http://www.minecraftforum.net/topic/1638036-my-first-script-for-minecraft-pi-api-a-rainbow/
 
-import mcpi.minecraft as minecraft
-import mcpi.block as block
+from .. import minecraft
+from .. import block
 from math import *
 import server
 

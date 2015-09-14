@@ -3,7 +3,7 @@
 # mcpipy.com retrieved from URL below, written by zhuowei
 # http://www.minecraftforum.net/topic/1639215-danfrisk-asks-for-physical-reality-does-opening-a-cdrom-from-minecraft-count/
 
-import mcpi.minecraft as minecraft
+from .. import minecraft
 import subprocess
 import time
 import server

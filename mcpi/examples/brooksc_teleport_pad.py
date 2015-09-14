@@ -2,9 +2,8 @@
 
 # as shared on mcpipy.com
 
-import mcpi.minecraft as minecraft
-import mcpi.block as block
-import time
+from .. import minecraft
+from .. import block
 import server
 
 

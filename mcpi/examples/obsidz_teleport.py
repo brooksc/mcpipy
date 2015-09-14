@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import mcpi.minecraft as minecraft
-import mcpi.block as block
+from .. import minecraft
+from .. import block
 import time
 import server
 

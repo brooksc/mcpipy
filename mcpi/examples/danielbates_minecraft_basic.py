@@ -1,5 +1,4 @@
 # Don't execute this directory -- this is a support script for danielbates_setblockdemo.py
-
 import sys
 
 # Add some common locations where the main API might be. Feel free to add/change
@@ -13,7 +12,7 @@ try:
 	import connection
 	import minecraft
 except ImportError:
-	print "Unable to find Minecraft API. Please place minecraft_basic.py in the mcpi directory."
+	print("Unable to find Minecraft API. Please place minecraft_basic.py in the mcpi directory.")
 	exit()
 
 _server = None
@@ -22,16 +21,14 @@ _playeredit = None
 
 def connect(ip="127.0.0.1", port=4711):
 	global _server, _blockedit, _playeredit
-	
 	try:
-		_server = connection.Connection(ip, port)
+		_server = connection.Connection(ip,	 port)
 		_blockedit = minecraft.Minecraft(_server)
 		_playeredit = _blockedit.player
 	except Exception:
-		print "Unable to connect to Minecraft server at {0}:{1}".format(ip,port)
+		print("Unable to connect to Minecraft server at {0}:{1}".format(ip,port))
 		return
-
-	print "Connected to Minecraft server at {0}:{1}".format(ip,port)
+	print("Connected to Minecraft server at {0}:{1}".format(ip,port))
 
 def setblock(x,y,z,*typedata):
 	_blockedit.setBlock(x,y,z,typedata)
